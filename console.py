@@ -116,7 +116,6 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         _args = args.split(" ", 1)
-        print(_args)
         if not _args[0]:
             print("** class name missing **")
             return
@@ -135,8 +134,9 @@ class HBNBCommand(cmd.Cmd):
                 except AttributeError:
                     continue
                 if value[0] is "\"":
+                    value = value.strip("\"")
                     value = value.replace("_", " ")
-                    value = value.replace("\"", "")
+                    value = value.replace("\\\"", "\"")
                 elif "." in value:
                     value = float(value)
                 else:
@@ -145,10 +145,8 @@ class HBNBCommand(cmd.Cmd):
                     except:
                         continue
                 setattr(new_instance, key, value)
-                print("{} {}: {}".format(type(value), key, value))
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """

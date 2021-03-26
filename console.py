@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
             _kwargs = dict((x, y)
                            for x, y in (elt.split('=')
                            for elt in _args[1].split(' ')))
-                           
+
             for key, value in _kwargs.items():
                 try:
                     getattr(new_instance, key)

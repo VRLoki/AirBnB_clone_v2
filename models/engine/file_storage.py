@@ -13,7 +13,7 @@ class FileStorage:
         if cls is not None:
             cls_objects = {}
             for k, v in FileStorage.__objects.items():
-                if v.__class__ == cls:
+                if v.__class__.__name__ == cls:
                     cls_objects.update({k: v})
             return cls_objects
         else:
@@ -39,6 +39,7 @@ class FileStorage:
                 if v is obj:
                     tmp = k
             FileStorage.__objects.pop(tmp)
+        self.save()
 
     def reload(self):
         """Loads storage dictionary from file"""

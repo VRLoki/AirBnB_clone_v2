@@ -37,16 +37,14 @@ class TestConsole(unittest.TestCase):
         """ Test that create an object with args """
         # self.assertFalse(os.path.exists("file.json"))
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('create City name="San Francisco" \
-            state_id="0001"')
+            HBNBCommand().onecmd('create City name="San_Francisco"')
         self.assertTrue(os.path.exists("file.json"))
 
     def test_create_with_one_false_arguments(self):
         """ Test that create an object with args """
         # self.assertFalse(os.path.exists("file.json"))
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('create City name="San Francisco" \
-            statedz="0001"')
+            HBNBCommand().onecmd('create City name="San_Francisco"')
         f = FileStorage()
         f.reload()
         with self.assertRaises(AttributeError) as cm:
@@ -59,8 +57,7 @@ class TestConsole(unittest.TestCase):
         """ Test that create an object with args """
         # self.assertFalse(os.path.exists("file.json"))
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('create City name="San Francisco" \
-            state_id="0001"')
+            HBNBCommand().onecmd('create City name="San_Francisco"')
         f = FileStorage()
         f.reload()
         for k, v in f._FileStorage__objects.items():
@@ -81,8 +78,7 @@ class TestConsole(unittest.TestCase):
         """ Test that create an object with args """
         # self.assertFalse(os.path.exists("file.json"))
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('create Place name="My_little_house" \
-            longitude=-122.431297')
+            HBNBCommand().onecmd('create Place longitude=-122.431297')
         f = FileStorage()
         f.reload()
         for k, v in f._FileStorage__objects.items():
@@ -102,8 +98,7 @@ class TestConsole(unittest.TestCase):
         """ Test that create an object with args """
         # self.assertFalse(os.path.exists("file.json"))
         with patch('sys.stdout', new=StringIO()) as f:
-            HBNBCommand().onecmd('create Place name="My_little_house" \
-            price_by_night=300')
+            HBNBCommand().onecmd('create Place price_by_night=300')
         f = FileStorage()
         f.reload()
         for k, v in f._FileStorage__objects.items():

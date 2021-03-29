@@ -211,7 +211,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(models.storage.all()[key])
+            models.storage.delete(models.storage.all()[key])
             models.storage.save()
         except KeyError:
             print("** no instance found **")

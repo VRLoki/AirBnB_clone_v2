@@ -22,7 +22,7 @@ class DBStorage():
     __engine = None
     __session = None
 
-    classes = [Amenity, City, Place, Review, State, User]
+    classes = [City, State]
 
     def __init__(self):
         """Instantiates the DBStorage class"""
@@ -62,7 +62,7 @@ class DBStorage():
 
     def delete(self, obj=None):
         """Deletes obj from the database"""
-        if obj:
+        if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):

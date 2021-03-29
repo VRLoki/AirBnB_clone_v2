@@ -50,6 +50,9 @@ class DBStorage():
             if type(cls) is str:
                 cls = eval(cls)
             obj = self.__session.query(cls).all()
+        for ob in obj:
+            if "_sa_instance_state" in ob.__dict__:
+                del ob.__dict__["_sa_instance_state"]
         return {"{}.{}".format(ob.__class__.__name__, ob.id): ob for ob in obj}
 
     def new(self, obj):

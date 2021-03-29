@@ -13,8 +13,8 @@ class FileStorage:
         if cls is not None:
             cls_objects = {}
             for k, v in FileStorage.__objects.items():
-                if v.__class__.__name__ == cls:
-                    cls_objects[k] = v
+                if k.startswith(cls.__name__):
+                    cls_objects.update({k: v})
             return cls_objects
         else:
             return FileStorage.__objects

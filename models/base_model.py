@@ -33,7 +33,7 @@ class BaseModel:
                                                          )
             if kwargs.get("__class__"):
                 del kwargs['__class__']
-            if not kwargs.get("id"):
+            if kwargs.get("id") is None:
                 self.id = str(uuid.uuid4())
             self.__dict__.update(kwargs)
 

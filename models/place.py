@@ -66,6 +66,7 @@ class Place(BaseModel, Base):
 
         @property
         def amenities(self):
+            """Amenities getter"""
             amenities = models.storage.all(Amenity)
             lst = []
             for amenity in amenities.values():
@@ -75,5 +76,6 @@ class Place(BaseModel, Base):
 
         @amenities.setter
         def amenities(self, obj):
+            """Amenities setter"""
             if type(obj) == Amenity:
                 self.amenity_ids.append(obj.id)

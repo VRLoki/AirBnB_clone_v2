@@ -22,7 +22,7 @@ class DBStorage():
     __engine = None
     __session = None
 
-    classes = [City, State]
+    classes = [City, Place, Review, State, User]
 
     def __init__(self):
         """Instantiates the DBStorage class"""
@@ -42,18 +42,19 @@ class DBStorage():
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in database"""
-        obj = []
+        objs = []
+        dct = {}
         if cls is None:
             for item in self.classes:
-                obj.extend(self.__session.query(item).all())
+                objs.extend(self.__session.query(item).all())
         else:
             if type(cls) is str:
                 cls = eval(cls)
-            obj = self.__session.query(cls).all()
-        for ob in obj:
-            if "_sa_instance_state" in ob.__dict__:
-                del ob.__dict__["_sa_instance_state"]
-        return {"{}.{}".format(ob.__class__.__name__, ob.id): ob for ob in obj}
+            objs = self.__session.query(cls).all()
+
+        for obj in objs:
+            dct[obj.__class__.__name__ + '.' + obj.id] = obj
+        return dct
 
     def new(self, obj):
         """Adds the object to the database"""

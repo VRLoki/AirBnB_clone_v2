@@ -22,7 +22,7 @@ class DBStorage():
     __engine = None
     __session = None
 
-    classes = [City, Place, Review, State, User]
+    classes = [Amenity, City, Place, Review, State, User]
 
     def __init__(self):
         """Instantiates the DBStorage class"""

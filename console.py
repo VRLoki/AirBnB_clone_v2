@@ -138,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
                 if value[0] is "\"":
                     value = value.strip("\"")
                     value = value.replace("_", " ")
-                    value = value.replace("\\\"", "\"")
+                    value = value.replace("\"", "")
                 elif "." in value:
                     value = float(value)
                 else:

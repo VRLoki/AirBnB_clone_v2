@@ -15,16 +15,16 @@ def do_deploy(archive_path):
         archive_path (str): the path of the archive to deploy on the servers.
     """
 
+    if not path.exists(archive_path):
+            return False
+
+    name = archive_path.split("/")[-1]
+    name_no_ext = name.split(".")[0]
+
+    remote = "/data/web_static/releases"
+    dest = "{}/{}".format(remote, name_no_ext)
+
     try:
-        if not path.exists(archive_path):
-            raise FileNotFoundError
-
-        name = archive_path.split("/")[-1]
-        name_no_ext = name.split(".")[0]
-
-        remote = "/data/web_static/releases"
-        dest = "{}/{}".format(remote, name_no_ext)
-
         put(archive_path, '/tmp')
         run('mkdir -p {}/'.format(dest))
         run('tar -xzf /tmp/{} -C {}'.format(name, dest))
@@ -33,10 +33,8 @@ def do_deploy(archive_path):
         run('rm -rf {}/web_static'.format(dest))
         run('rm -rf /data/web_static/current')
         run('ln -s {}/ /data/web_static/current'.format(dest))
+        print("New version deployed!")
+        return True
 
     except:
-        print("Error. Version deploy aborted")
         return False
-
-    print("New version deployed!")
-    return True

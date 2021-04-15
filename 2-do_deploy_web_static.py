@@ -16,23 +16,22 @@ def do_deploy(archive_path):
     """
 
     if not path.exists(archive_path):
-            return False
+        return False
 
     name = archive_path.split("/")[-1]
-    name_no_ext = name.split(".")[0]
+    name_noext = name.split(".")[0]
 
-    remote = "/data/web_static/releases"
-    dest = "{}/{}".format(remote, name_no_ext)
+    remote = "/data/web_static/releases/"
 
     try:
         put(archive_path, '/tmp')
-        run('mkdir -p {}/'.format(dest))
-        run('tar -xzf /tmp/{} -C {}'.format(name, dest))
+        run('mkdir -p {}{}/'.format(remote, name_noext))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(name, remote, name_noext))
         run('rm /tmp/{}'.format(name))
-        run('mv {}/web_static/* {}/'.format(dest, dest))
-        run('rm -rf {}/web_static'.format(dest))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(remote, name_noext))
+        run('rm -rf {}{}/web_static'.format(remote, name_noext))
         run('rm -rf /data/web_static/current')
-        run('ln -s {}/ /data/web_static/current'.format(dest))
+        run('ln -sf {}{}/ /data/web_static/current'.format(remote, name_noext))
         print("New version deployed!")
         return True
 

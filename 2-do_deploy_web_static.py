@@ -27,7 +27,7 @@ def do_deploy(archive_path):
         put(archive_path, '/tmp')
         run('mkdir -p {}{}/'.format(remote, name_noext))
         run('tar -xzf /tmp/{} -C {}{}/'.format(name, remote, name_noext))
-        run('rm /tmp/{}'.format(name))
+        run('rm -f /tmp/{}'.format(name))
         run('mv {0}{1}/web_static/* {0}{1}/'.format(remote, name_noext))
         run('rm -rf {}{}/web_static'.format(remote, name_noext))
         run('rm -rf /data/web_static/current')

@@ -1,33 +1,42 @@
 #!/usr/bin/python3
-"""Fabric deployment module"""
-from fabric.api import *
-from datetime import datetime
+"""
+    Fabric script that distributes an archive to the web servers.
+"""
 from os import path
+from fabric.api import env, put, run
 
 env.hosts = ['35.229.40.200', '35.229.23.118']
-env.user = "ubuntu"
-env.key_filename = "~/.ssh/holberton"
 
 
 def do_deploy(archive_path):
-    """Deploys our website to our servers!"""
+    """ Function that distributes the archive.
 
-    if not path.exists(archive_path):
-        return False
-
-    filename = archive_path.split("/")[-1]
-    noext, ext = path.splitext(filename)
-    remotepath = "/data/web_static/releases/"
+    Args:
+        archive_path (str): the path of the archive to deploy on the servers.
+    """
 
     try:
+        if not path.exists(archive_path):
+            raise FileNotFoundError
+
+        name = archive_path.split("/")[-1]
+        name_no_ext = name.split(".")[0]
+
+        remote = "/data/web_static/releases"
+        dest = "{}/{}".format(remote, name_no_ext)
+
         put(archive_path, '/tmp')
-        run('mkdir -p {}{}/'.format(remotepath, noext))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(filename, remotepath, noext))
-        run('rm -f /tmp/{}'.format(filename))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(remotepath, noext))
-        run('rm -rf {}{}/web_static'.format(remotepath, noext))
+        run('mkdir -p {}/'.format(dest))
+        run('tar -xzf /tmp/{} -C {}'.format(name, dest))
+        run('rm /tmp/{}'.format(name))
+        run('mv {}/web_static/* {}/'.format(dest, dest))
+        run('rm -rf {}/web_static'.format(dest))
         run('rm -rf /data/web_static/current')
-        run('ln -sf {}{}/ /data/web_static/current'.format(remotepath, noext))
-        print("New version deployed!")
+        run('ln -s {}/ /data/web_static/current'.format(dest))
+
     except:
+        print("Error. Version deploy aborted")
         return False
+
+    print("New version deployed!")
+    return True

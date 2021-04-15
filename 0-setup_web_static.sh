@@ -6,6 +6,7 @@ apt update -y
 apt install nginx -y
 
 # Create required directories if they don't exist
+mkdir -p /data/
 mkdir -p /data/web_static/
 mkdir -p /data/web_static/releases/
 mkdir -p /data/web_static/shared/

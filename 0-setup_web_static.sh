@@ -21,7 +21,7 @@ ln -sf /data/web_static/releases/test /data/web_static/current
 chown -hR ubuntu:ubuntu /data
 
 # Add alias to serve the content of /data/web_static/current to hbnb_static
-sed -i '/server_name _;/a\\n        location /hbnb_static/ {\n                alias /data/web_static/current/;\n        }' /etc/nginx/sites-available/default
+sed -i '51i\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n' /etc/nginx/sites-available/default
 
 # Restart the nginx service
 service nginx restart

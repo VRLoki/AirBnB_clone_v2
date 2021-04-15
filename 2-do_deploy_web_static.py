@@ -1,11 +1,12 @@
 #!/usr/bin/python3
-"""
-    Fabric script that distributes an archive to the web servers.
-"""
+"""Fabric deployment module"""
+from fabric.api import *
+from datetime import datetime
 from os import path
-from fabric.api import env, put, run
 
 env.hosts = ['35.229.40.200', '35.229.23.118']
+env.user = "ubuntu"
+env.key_filename = "~/.ssh/holberton"
 
 
 def do_deploy(archive_path):

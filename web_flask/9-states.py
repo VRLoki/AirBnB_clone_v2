@@ -29,9 +29,9 @@ def states(id=None):
     if id is not None:
         for state in states:
             if state.id == id:
-                return render_template('9-states.html', states=state)
+                return render_template('9-states.html', state=state)
         return render_template('9-states.html')
-    return render_template('9-states.html', states=states, full=True)
+    return render_template('9-states.html', states=states)
 
 
 if __name__ == '__main__':
